@@ -1,0 +1,79 @@
+# depslib dependency file v1.0
+1655422690 source:c:\users\matias\desktop\tienda de ropa\cliente.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"cliente.h"
+
+1655489634 source:c:\users\matias\desktop\tienda de ropa\fecha.cpp
+	<iostream>
+	"rlutil.h"
+	"fecha.h"
+
+1655426400 source:c:\users\matias\desktop\tienda de ropa\producto.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"producto.h"
+
+1656369987 source:c:\users\matias\desktop\tienda de ropa\main.cpp
+	<iostream>
+	<cstdio>
+	<locale.h>
+	"rlutil.h"
+	"funciones.h"
+	"cliente.h"
+	"producto.h"
+	"venta.h"
+
+1601107872 c:\users\matias\desktop\tienda de ropa\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
+
+1656369916 source:c:\users\matias\desktop\tienda de ropa\funciones.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"producto.h"
+	"fecha.h"
+
+1655941838 c:\users\matias\desktop\tienda de ropa\funciones.h
+
+1655417598 c:\users\matias\desktop\tienda de ropa\cliente.h
+	"funciones.h"
+	"fecha.h"
+	"persona.h"
+
+1655494618 c:\users\matias\desktop\tienda de ropa\fecha.h
+	"ctime"
+
+1655422691 c:\users\matias\desktop\tienda de ropa\persona.h
+
+1655422574 source:c:\users\matias\desktop\tienda de ropa\persona.cpp
+	<iostream>
+	"rlutil.h"
+	"fecha.h"
+	"persona.h"
+
+1655422574 c:\users\matias\desktop\tienda de ropa\producto.h
+
+1655946893 source:c:\users\matias\desktop\tienda de ropa\venta.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"cliente.h"
+	"fecha.h"
+	"venta.h"
+
+1655494966 c:\users\matias\desktop\tienda de ropa\venta.h
+
