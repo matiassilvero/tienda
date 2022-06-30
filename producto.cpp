@@ -21,13 +21,13 @@ bool Producto::cargarProducto(){
 	 cout << "Ingrese el stock del producto: ";
 	 cin >> stock;
 
-	 cout << "Ingrese el genero del producto(1-Hombre, 2-Mujer, 3-Unisex): ";
+	 cout << "Ingrese el genero del producto(1-Hombre, 2-Mujer, 3-Otros): ";
 	 cin >> genero;
 
 	 cout << "Ingrese el tipo de producto(1-Prenda superior, 2-Prenda inferior, 3-Ropa interior): ";
 	 cin >> tipo;
 
-	 cout << "Ingrese precio: ";
+	 cout << "Ingrese precio: $";
 	 cin >> precio;
 
 	 return true;
@@ -37,6 +37,8 @@ bool Producto::cargarProducto(){
 void Producto::mostrarProducto(){
 
 	 cout << "Id: " << idProducto << endl;
+
+	 cout << "Nombre del producto: " << nombre << endl;
 
 	 cout << "Marca: ";
 	 if(marca == 1){
@@ -74,7 +76,7 @@ void Producto::mostrarProducto(){
 		}
 
 	 cout << "Precio: ";
-	 cout << "$" << precio;
+	 cout << "$" << precio << endl;
 
 	}
 
@@ -89,6 +91,28 @@ bool Producto::mostrarTodosLosProductos(){
 	 Producto regP;
 	 while(fread(&regP,sizeof(Producto),1,p) == 1){
 		 regP.mostrarProducto();
+		 cout << "--------------------------" << endl;
+		}
+	 fclose(p);
+
+	 return true;
+
+	}
+
+bool Producto::mostrarTodosLosProductos(int gen){
+
+	 FILE * p =fopen(APRODUCTOS,"rb");
+	 if(p==NULL){
+		 cout << "Error con el archivo de productos. ";
+		 cin.get();
+		 return false;
+		}
+	 Producto regP;
+	 while(fread(&regP,sizeof(Producto),1,p) == 1){
+		 if(regP.getGenero()==gen){
+			 regP.mostrarProducto();
+			 cout << "--------------------------" << endl;
+			}
 		}
 	 fclose(p);
 
@@ -120,9 +144,17 @@ int generarIdProducto(){
 		 return -1;
         }
      fseek(p,SEEK_SET,SEEK_END);
-     int id=((ftell(p)/sizeof(Producto))+1);
+     int id = ((ftell(p)/sizeof(Producto))+1);
      fclose(p);
 
      return id;
 
 	}
+
+//		void setIdProducto();
+//		void setMarca();
+//		void setPrecio();
+//		void setNombre();
+//		void setStock();
+//		void setGenero();
+//		void setTipo();

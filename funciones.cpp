@@ -5,6 +5,7 @@ using namespace rlutil;
 #include "funciones.h"
 #include "producto.h"
 #include "fecha.h"
+#include "cliente.h"
 
 void menuPrincipal(){
 
@@ -58,14 +59,14 @@ void menuOculto(){
 	 cout<<"| 1- CONFIGURACION  		    	|"<<endl;
 	 setColor(WHITE);
 	 gotoxy(1,7);
-	 cout<<"| 2- REPORTES    			|"<<endl;
+	 cout<<"| 2- REPORTES/CONSULTAS    		|"<<endl;
 	 setColor(RED);
 	 gotoxy(1,8);
 	 cout<<"| 3- VOLVER AL MENU PRINCIPAL 	 	|"<<endl;
 	 setColor(WHITE);
 	 gotoxy(1,9);
 	 cout << "-----------------------------------------" << endl;
-	 cout<<"| 0- FINALIZAR PROGRAMA      	 	|"<<endl;
+	 cout<<"| 0- VOLVER ATRAS          	        |"<<endl;
 	 cout << endl ;
 	 cout<<"Ingrese una opción: ";
 
@@ -139,7 +140,6 @@ void menuPoliticas(){
 
 	}
 
-
 void menuContacto(){
 
 	 setColor(LIGHTRED);
@@ -162,3 +162,99 @@ void menuContacto(){
 
 	}
 
+bool buscarCliente(int dniBuscar){
+
+	 FILE * p = fopen("clientes.dat","rb");
+	 if(p==NULL){
+		 cout << "Error al abrir archivo de clientes ";
+		 cin.get();
+		 return false;
+		}
+	 Cliente regC;
+	 while(fread(&regC,sizeof(Cliente),1,p)==1){
+		 if(regC.getDni() == dniBuscar){
+			 return true;
+			}
+		}
+	 fclose(p);
+
+	 return false;
+	}
+
+//CUENTO CANTIDAD DE CLIENTES EN EL ARCHIVO
+int cantidadDeClientes(){
+
+     FILE * p = fopen("clientes.dat","rb");
+     if(p == NULL){
+         anykey("Error al abrir el archivo de clientes. ");
+         return 0;
+        }
+     int bytes, cantClientes;
+     fseek(p, 0, SEEK_END);
+     bytes = ftell(p);
+     cantClientes = bytes/sizeof(Cliente);
+     fclose(p);
+
+     return cantClientes;
+    }
+
+//ORDENO CLIENTES POR APELLIDO
+void ordenarClientesPorApellido(Cliente * vec, int tam){//RECIBE UN VECTOR Y SU TAMAÑO
+
+	 int i,j,pos;
+	 Cliente aux;
+	 for(i=0;i<tam-1;i++){
+		 pos=i;
+		 for(j=i+1;j<tam;j++){
+			 if(strcmp(vec[j].getApellido(),vec[pos].getApellido())<0){
+				 pos=j;
+				}
+			}
+		 aux = vec[i];
+		 vec[i] = vec[pos];
+		 vec[pos] = aux;
+		}
+	}
+
+//MUESTRO CLIENTES USANDO MD
+void mostrarClientesPorApellidoConMD(){
+
+     int cant = cantidadDeClientes();
+     if(cant==0){
+	    anykey("No hay clientes todavia.");
+	    return;
+	   }
+
+     Cliente * vec;
+     vec = (Cliente*)malloc(cant*sizeof(Cliente));
+
+     if (vec==NULL){
+	    anykey("No hay memoria para continuar.");
+	    return;
+	   }
+
+     FILE *p = fopen("clientes.dat", "rb");
+     if(p==NULL){
+        cout<<"Error con el archivo clientes.";
+	    free(vec);
+	    return;
+	   }
+     fread(&vec[0],sizeof(Cliente),cant,p);
+     fclose(p);
+
+     ordenarClientesPorApellido(vec,cant);
+
+     int i;
+     cout<<"Listando todos tus clientes ordenados por Apellido: "<<endl<<endl;
+     for(i=0;i<cant;i++){
+	   // mostrarVectorClientes(vec[i]);
+	    vec[i].mostrarCliente();
+	    cout<<endl;
+	   }
+//    void mostrarVectorClientes(Cliente reg){
+//    if(reg.estado==true){
+//    cout<<"------------------------------------"<<endl;
+//    cout<<"Id                 : "<<reg.id<<endl;
+     free(vec);
+     anykey();
+	}

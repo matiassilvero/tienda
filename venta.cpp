@@ -6,59 +6,65 @@ using namespace rlutil;
 #include "cliente.h"
 #include "fecha.h"
 #include "venta.h"
+#include "producto.h"
 
 const char * AVENTAS = "ventas.dat";
 
-bool Venta::cargarVenta(){
+bool Venta::cargarVenta(int dniCliente, int idProducto){
 
-	 int d;
-	 cout << "dni: ";
-	 cin >> d;
-	 setDni(d);
+	 FILE*p = fopen("clientes.dat","rb");
+	 if(p==NULL){
+		 cout << "Error con el archivo clientes. " << endl;
+		 anykey();
+		 return false;
+		}
+	 Cliente regC;
+	 Fecha fechaNacimientoCliente;
+	 while(fread(&regC,sizeof(Cliente),1,p) == 1){
+		 if(regC.getDni() == dniCliente){
+			 setDni(dniCliente);
+			 setNombre(regC.getNombre());
+			 setApellido(regC.getApellido());
+			 setMail(regC.getMail());
+			 fechaNacimientoCliente = regC.getFechaNacimiento();
+			}
+		}
+	 fclose(p);
 
-	 char n[20];
-	 cout << "nombre: ";
-	 cin.getline(n,20);
-	 setNombre(n);
+	 //Calculamos edad del cliente
+	 Fecha fechaActual;
+	 int edadCliente = fechaActual - fechaNacimientoCliente;
+	 char nombreCompra[20];
 
-	 char a[20];
-	 char np[20];
-	 cout << "apellido: ";
-	 cin.getline(a,20);
-	 setApellido(a);
+	 FILE*p1 = fopen("productos.dat","rb");
+	 if(p1==NULL){
+		 cout << "Error con el archivo productos. " << endl;
+		 anykey();
+		 return false;
+		}
+	 Producto regP;
+	 while(fread(&regP,sizeof(Producto),1,p1) == 1){
+		 if(regP.getIdProducto() == idProducto){
+			 setNombreProducto(regP.getNombre());
+			 setMarca(regP.getMarca());
+			 setGenero(regP.getGenero());
+			 setTipo(regP.getTipo());
+			 if(edadCliente > 65){
+				 setDescuento(20);
+				}
+			 else{
+				 setDescuento(0);
+				}
+			 setPrecio(regP.getPrecio() * ((100 - descuento)/100) );
+			 setFechaVenta(fechaActual);
+			 strcpy(nombreCompra,regP.getNombre());
+			}
+		}
+	 fclose(p1);
+	 cout << nombreCompra << " comprado con exito. " << endl;
+	 anykey();
 
-	 char mail[20];
-	 cout << "mail: " ;
-	 cin.getline(mail,20);
-	 setMail(mail);
-
-	 float p;
-	 cout << "precio: ";
-	 cin >>p;
-	 setPrecio(p);
-
-	 int m,g,t;
-	 float des;
-	 cout << "marca: ";
-	 cin >>m;
-	 setMarca(m);
-
-	 cout << "genero: ";
-	 cin >> g;
-	 setGenero(g);
-
-	 cout << "tipo:";
-	 cin >>t;
-	 setTipo(t);
-
-	 cout << "descuento: ";
-	 cin >> des;
-	 setDescuento(des);
-
-	 Fecha fechaVe;
-	 cout << "fecha venta: ";
-	 setFechaVenta(fechaVe);
-
+	 return true;
 	}
 
 void Venta::setDni(int ndni){
@@ -117,7 +123,7 @@ void Venta::mostrarVenta(){
 
 	 cout << "Producto: " << nombreProducto << endl;
 
-	 cout << "Precio de compra: " << precio << endl;
+	 cout << "Precio de compra: $" << precio << endl;
 
 	 cout << "Marca: ";
 	 if(marca == 1){
@@ -154,10 +160,40 @@ void Venta::mostrarVenta(){
 
 	 cout << "Descuento(si es que lo tuvo de acorde a su edad): " << descuento << "%" << endl;
 
-	 //cout << "Fecha de venta: " << fechaVenta << endl;
+	 cout << "Fecha de venta: "; fechaVenta.mostrarFecha(); cout << endl;
 
 	}
 
+void Venta::mostrarTodasLasVentas(){
+
+	 FILE * p = fopen(AVENTAS,"rb");
+	 if(p == NULL){
+		 anykey("Error al abrir el archivo ventas. ");
+		 return;
+		}
+	 Venta regV;
+	 while(fread(&regV,sizeof(Venta),1,p) == 1){
+		 regV.mostrarVenta();
+		 cout << "------------------"<< endl;
+		}
+	 fclose(p);
+
+	}
+
+bool Venta::grabarVenta(){
+
+	 FILE * p = fopen(AVENTAS,"ab");
+	 if(p == NULL){
+		 cout << "Error con el archivo de ventas. " << endl;
+		 anykey();
+		 return false;
+		}
+	 bool escribio = fwrite(this, sizeof * this, 1, p);
+     fclose(p);
+
+     return escribio;
+
+	}
 
 
 

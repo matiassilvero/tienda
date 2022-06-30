@@ -8,5 +8,9 @@ void menuContacto();
 int generarIdProducto();
 void menuProductos();
 void menuPromociones();
+bool buscarCliente(int);
+void mostrarClientesPorApellidoConMD();
+void ordenarClientesPorApellido();
+int cantidadDeClientes();
 
 #endif // FUNCIONES_H_INCLUDED

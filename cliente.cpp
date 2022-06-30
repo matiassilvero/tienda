@@ -5,7 +5,6 @@ using namespace rlutil;
 #include "funciones.h"
 #include "cliente.h"
 
-
 const char * ACLIENTES = "clientes.dat";
 
 bool Cliente::cargarCliente(){
@@ -13,7 +12,7 @@ bool Cliente::cargarCliente(){
 	 Persona::cargarPersona();
 
 	 cout << "Ingrese mail: ";
-	 cin.getline(mail,20);
+	 cin.getline(mail,30);
 
 	 cout << "Ingrese celular: ";
 	 cin >> celular;
@@ -64,3 +63,12 @@ void Cliente::mostrarTodosLosClientes(){
 	 return;
 
 	}
+
+void Cliente::setMail(const char * nmail){
+	 strcpy(mail,nmail);
+	}
+
+void Cliente::setCelular(long ncelular){
+	 celular = ncelular;
+	}
+

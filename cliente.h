@@ -7,7 +7,7 @@
 class Cliente:public Persona{
 
 	 private:
-	    char mail[20];
+	    char mail[30];
 		long celular;
 	 public:
 //	    void setDni();
@@ -21,7 +21,13 @@ class Cliente:public Persona{
 //		char * getApellido(){return apellido;}
 //		Fecha getFechaNacimiento(){return fechaNacimiento;}
 //		int getGenero(){return genero;}
-///TODO ESO CREO Q YA ESTA EN LA CLASE PERSONA
+///TODO ESO YA ESTA EN LA CLASE PERSONA
+
+		void setMail(const char*);
+	    void setCelular(long);
+
+		char * getMail(){return mail;}
+		long getCelular(){return celular;}
 
         bool cargarCliente();
         bool grabarEnDisco();

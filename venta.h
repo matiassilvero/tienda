@@ -4,22 +4,24 @@
 class Venta{
 
 	 private:
-	  int dni;
-	  char nombreProducto[20];
-	  char nombre[20];
-	  char apellido[20];
-	  char mail[20];
-	  float precio;
-	  int marca;
-	  int genero;
-	  int tipo;
+	  int dni;					//archivo Clientes
+	  char nombre[20];          //archivo Clientes
+	  char apellido[20];        //archivo Clientes
+	  char mail[30];            //archivo Clientes
+	  char nombreProducto[20];	//archivo Productos
+	  float precio;             //archivo Productos
+	  int marca;                //archivo Productos
+	  int genero;               //archivo Productos
+	  int tipo;                 //archivo Productos
 	  float descuento;
 	  Fecha fechaVenta;
 
 	 public:
 	  bool cargarVenta();//si es true va guardar la venta
+	  bool cargarVenta(int,int);
 	  void mostrarVenta();
 	  void mostrarTodasLasVentas();
+	  bool grabarVenta();
 
 	  void setDni(int);
 	  void setNombre(const char*);

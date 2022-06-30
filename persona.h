@@ -11,16 +11,17 @@ class Persona{
 	  int genero;
 
 	 public:
-	  void setDni();
-	  void setNombre();
-	  void setApellido();
-	  void setEdad();
-	  void setGenero();
+	  void setDni(int);
+	  void setNombre(const char *);
+	  void setApellido(const char *);
+	  void setFechaNacimiento(Fecha);
+	  void setGenero(int);
 
 	  int getDni(){return dni;}
 	  char * getNombre(){return nombre;}
 	  char * getApellido(){return apellido;}
 	  Fecha getFechaNacimiento(){return fechaNacimiento;}
+	  int getEdad();
 	  int getGenero(){return genero;}
 
 	  bool cargarPersona();

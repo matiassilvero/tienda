@@ -77,3 +77,83 @@
 
 1655494966 c:\users\matias\desktop\tienda de ropa\venta.h
 
+1656628585 source:c:\users\matias\segundo parcial\tienda de ropa\cliente.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"cliente.h"
+
+1601107872 c:\users\matias\segundo parcial\tienda de ropa\rlutil.h
+	<iostream>
+	<string>
+	<cstdio>
+	<stdio.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	<termios.h>
+	<unistd.h>
+	<sys/ioctl.h>
+	<sys/types.h>
+	<sys/time.h>
+
+1656628700 c:\users\matias\segundo parcial\tienda de ropa\funciones.h
+
+1656618387 c:\users\matias\segundo parcial\tienda de ropa\cliente.h
+	"funciones.h"
+	"fecha.h"
+	"persona.h"
+
+1655494618 c:\users\matias\segundo parcial\tienda de ropa\fecha.h
+	"ctime"
+
+1656619543 c:\users\matias\segundo parcial\tienda de ropa\persona.h
+
+1655489634 source:c:\users\matias\segundo parcial\tienda de ropa\fecha.cpp
+	<iostream>
+	"rlutil.h"
+	"fecha.h"
+
+1656628809 source:c:\users\matias\segundo parcial\tienda de ropa\funciones.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"producto.h"
+	"fecha.h"
+	"cliente.h"
+
+1656458774 c:\users\matias\segundo parcial\tienda de ropa\producto.h
+
+1656628585 source:c:\users\matias\segundo parcial\tienda de ropa\main.cpp
+	<iostream>
+	<cstdio>
+	<locale.h>
+	"rlutil.h"
+	"funciones.h"
+	"cliente.h"
+	"producto.h"
+	"venta.h"
+
+1656618293 c:\users\matias\segundo parcial\tienda de ropa\venta.h
+
+1656619543 source:c:\users\matias\segundo parcial\tienda de ropa\persona.cpp
+	<iostream>
+	"rlutil.h"
+	"fecha.h"
+	"persona.h"
+
+1656618293 source:c:\users\matias\segundo parcial\tienda de ropa\producto.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"producto.h"
+
+1656622041 source:c:\users\matias\segundo parcial\tienda de ropa\venta.cpp
+	<iostream>
+	"rlutil.h"
+	"funciones.h"
+	"cliente.h"
+	"fecha.h"
+	"venta.h"
+	"producto.h"
+

@@ -17,6 +17,7 @@ class Producto{
 	 	void mostrarProducto();
 	 	bool grabarProductoEnDisco();
 	 	bool mostrarTodosLosProductos();
+	 	bool mostrarTodosLosProductos(int);
 
 		void setIdProducto();
 		void setMarca();

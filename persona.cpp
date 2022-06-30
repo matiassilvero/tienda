@@ -11,10 +11,10 @@ bool Persona::cargarPersona(){
 	 cin >> dni;
 	 cin.ignore();
 
-	 cout << "Ingrese el nombre: " << endl;
+	 cout << "Ingrese el nombre: ";
 	 cin.getline(nombre,20);
 
-	 cout << "Ingrese el apellido: " << endl;
+	 cout << "Ingrese el apellido: ";
 	 cin.getline(apellido,20);
 
 	 cout << "Ingrese el genero(1- Hombre 2- Mujer 3-Otro): ";
@@ -49,4 +49,23 @@ void Persona::mostrarPersona(){
 
 	}
 
+void Persona::setNombre(const char * nnombre){
+	 strcpy(nombre,nnombre);
+	}
+
+void Persona::setApellido(const char * napellido){
+	 strcpy(apellido,napellido);
+	}
+
+void Persona::setDni(int ndni){
+	 dni = ndni;
+	}
+
+void Persona::setGenero(int ngenero){
+	 genero = ngenero;
+	}
+
+void Persona::setFechaNacimiento(Fecha fechaNac){
+	 fechaNacimiento = fechaNac;
+	}
 
