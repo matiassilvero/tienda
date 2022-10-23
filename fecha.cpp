@@ -3,6 +3,8 @@ using namespace std;
 #include "rlutil.h"
 using namespace rlutil;
 #include "fecha.h"
+#include "funciones.h"
+#include "persona.h"
 
 Fecha::Fecha(){
 
@@ -13,6 +15,14 @@ Fecha::Fecha(){
      dia = f->tm_mday;
      mes = f->tm_mon + 1;
      anio = f->tm_year + 1900;
+
+	}
+
+Fecha::Fecha(int d,int m, int a){
+
+	 dia = d;
+	 mes = m;
+	 anio = a;
 
 	}
 
@@ -27,13 +37,28 @@ bool Fecha::cargarFecha(){
 	 cout << "Anio: ";
 	 cin >> anio;
 
-	 return true;
+	 bool fechaValida = validarFecha(dia,mes,anio);
+
+	 return fechaValida;
 
 	}
 
 void Fecha::mostrarFecha(){
 
-	 cout << getDia() << "/" << getMes() << "/" << getAnio() << endl;
+	 if(dia<10){
+         cout << "0" << dia << "/";
+        }
+     else{
+         cout << dia << "/";
+        }
+     if(mes<10){
+         cout << "0" << mes << "/";
+        }
+     else{
+         cout << mes << "/";
+        }
+
+	 cout << anio;
 
 	}
 
@@ -125,3 +150,4 @@ int Fecha::operator-(Fecha obj){///DEVUELVE LA EDAD RESTANDO 2 FECHAS
      return total;
 
 	}
+

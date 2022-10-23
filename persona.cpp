@@ -1,14 +1,20 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 #include "rlutil.h"
 using namespace rlutil;
 #include "fecha.h"
 #include "persona.h"
+#include "cliente.h"
 
 bool Persona::cargarPersona(){
 
 	 cout << "Ingrese el dni: ";
 	 cin >> dni;
+	 if(dni<1000000 || dni>99999999){
+		 cout << "Debe ser un DNI valido, entre 1000000 y 99999999 ";
+		 return false;
+		}
 	 cin.ignore();
 
 	 cout << "Ingrese el nombre: ";
@@ -19,34 +25,39 @@ bool Persona::cargarPersona(){
 
 	 cout << "Ingrese el genero(1- Hombre 2- Mujer 3-Otro): ";
 	 cin >> genero;
+	 if(genero < 1 || genero > 3){
+		 cout << "Debe ser un genero valido, entre 1 y 3";
+		 return false;
+		}
 
 	 cout << "Ingrese la fecha de nacimiento(DDMMAA): " << endl;
-	 fechaNacimiento.cargarFecha();
+	 if(!fechaNacimiento.cargarFecha()){
+		 cout << "No es una fecha valida. ";
+		 return false;
+		}
 	 cin.ignore();
+
+	 return true;
 
 	}
 
 void Persona::mostrarPersona(){
 
-	 cout << "Dni: " << dni << endl;
-
-	 cout << "Nombre: " << nombre << endl;
-
-	 cout << "Apellido: " << apellido << endl;
-
-	 cout << "Genero: ";
+     cout << left;
+	 cout << setw(10) << dni;
+	 cout << setw(11) << nombre;
+	 cout << setw(11) << apellido;
+	 cout << setw(1); fechaNacimiento.mostrarFecha();
+	 cout << "   " << setw(8);
 	 if(genero == 1){
-		 cout << "Hombre " << endl;
+		 cout << "Hombre ";
 		}
 	 else if(genero == 2){
-		 cout << "Mujer " << endl;
+		 cout << "Mujer ";
 		}
 	 else{
-	 	 cout << "Otro " << endl;
+	 	 cout << "Otro ";
 		}
-
-	 cout << "Fecha de nacimiento: "; fechaNacimiento.mostrarFecha();
-
 	}
 
 void Persona::setNombre(const char * nnombre){

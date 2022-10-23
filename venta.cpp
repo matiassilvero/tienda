@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 #include "rlutil.h"
 using namespace rlutil;
@@ -10,16 +11,17 @@ using namespace rlutil;
 
 const char * AVENTAS = "ventas.dat";
 
-bool Venta::cargarVenta(int dniCliente, int idProducto){
+bool Venta::cargarVenta(int dniCliente, float importe,int idProducto){
 
 	 FILE*p = fopen("clientes.dat","rb");
 	 if(p==NULL){
-		 cout << "Error con el archivo clientes. " << endl;
-		 anykey();
+		 anykey("Error con el archivo clientes. ");
 		 return false;
 		}
+
 	 Cliente regC;
 	 Fecha fechaNacimientoCliente;
+
 	 while(fread(&regC,sizeof(Cliente),1,p) == 1){
 		 if(regC.getDni() == dniCliente){
 			 setDni(dniCliente);
@@ -29,46 +31,47 @@ bool Venta::cargarVenta(int dniCliente, int idProducto){
 			 fechaNacimientoCliente = regC.getFechaNacimiento();
 			}
 		}
+
 	 fclose(p);
 
-	 //Calculamos edad del cliente
-	 Fecha fechaActual;
-	 int edadCliente = fechaActual - fechaNacimientoCliente;
-	 char nombreCompra[20];
 
 	 FILE*p1 = fopen("productos.dat","rb");
 	 if(p1==NULL){
-		 cout << "Error con el archivo productos. " << endl;
-		 anykey();
+		 anykey("Error con el archivo productos. ");
 		 return false;
 		}
+
 	 Producto regP;
-	 while(fread(&regP,sizeof(Producto),1,p1) == 1){
+
+	 while(fread(&regP,sizeof(Producto),1,p) == 1){
 		 if(regP.getIdProducto() == idProducto){
-			 setNombreProducto(regP.getNombre());
-			 setMarca(regP.getMarca());
-			 setGenero(regP.getGenero());
-			 setTipo(regP.getTipo());
-			 if(edadCliente > 65){
-				 setDescuento(20);
-				}
-			 else{
-				 setDescuento(0);
-				}
-			 setPrecio(regP.getPrecio() * ((100 - descuento)/100) );
-			 setFechaVenta(fechaActual);
-			 strcpy(nombreCompra,regP.getNombre());
+			 setIdProducto(idProducto);
 			}
 		}
+
 	 fclose(p1);
-	 cout << nombreCompra << " comprado con exito. " << endl;
-	 anykey();
+
+	 Fecha fechaActual;
+	 if(int edad = fechaActual-fechaNacimientoCliente >= 65){
+		 setDescuento(20);
+		}
+	 else{
+		 setDescuento(0);
+		}
+	 setPrecio(importe);
+	 setFechaVenta(fechaActual);
+	 cout << endl;
 
 	 return true;
+
 	}
 
 void Venta::setDni(int ndni){
 	 dni = ndni;
+	}
+
+void Venta::setIdProducto(int nIdProducto){
+	 idProducto= nIdProducto;
 	}
 
 void Venta::setNombre(const char * nnombre){
@@ -83,24 +86,8 @@ void Venta::setMail(const char * nmail){
 	 strcpy(mail,nmail);
 	}
 
-void Venta::setNombreProducto(const char * nnombre){
-	 strcpy(nombreProducto,nnombre);
-	}
-
 void Venta::setPrecio(float nprecio){
 	 precio = nprecio;
-	}
-
-void Venta::setMarca(int nmarca){
-	 marca = nmarca;
-	}
-
-void Venta::setGenero(int ngenero){
-	 genero = ngenero;
-	}
-
-void Venta::setTipo(int ntipo){
-	 tipo = ntipo;
 	}
 
 void Venta::setDescuento(float ndescuento){
@@ -111,56 +98,32 @@ void Venta::setFechaVenta(Fecha nfechaventa){
 	 fechaVenta = nfechaventa;
 	}
 
+void Venta::mostrarEncabezadoVenta(){
+
+     cout << left;
+     cout << setw(3) << " ID";
+     cout << setw(12) << "   DNI ";
+     cout << setw(12) << "Nombre ";
+     cout << setw(12) << "Apellido ";
+     cout << setw(17) << "    Mail";
+     cout << setw(8) << "Precio";
+     cout << setw(12) << "Descuento";
+     cout << setw(13) << "Fecha Venta" << endl;
+     cout << "----------------------------------------------------------------------------------------" << endl;
+
+    }
+
 void Venta::mostrarVenta(){
 
-	 cout << "Dni del comprador: " << dni << endl;
-
-	 cout << "Nombre: " << nombre << endl;
-
-	 cout << "Apellido: " << apellido << endl;
-
-	 cout << "Mail: " << mail << endl;
-
-	 cout << "Producto: " << nombreProducto << endl;
-
-	 cout << "Precio de compra: $" << precio << endl;
-
-	 cout << "Marca: ";
-	 if(marca == 1){
-		 cout << "Adidas " << endl;
-		}
-	 else if(marca == 2){
-		 cout << "NIKE" << endl;
-		}
-	 else{
-		 cout << "PUMA" << endl;
-		}
-
-	 cout << "Genero: ";
-	 if(genero == 1){
-		 cout << "Hombre" << endl;
-		}
-	 else if(genero== 2){
-		 cout << "Mujer" << endl;
-		}
-	 else{
-		 cout << "Otro" << endl;
-		}
-
-	 cout << "Tipo de prenda: ";
-	 if(tipo == 1){
-		 cout << "Prenda superior" << endl;
-		}
-	 else if(tipo== 2){
-		 cout << "Prenda inferior" << endl;
-		}
-	 else{
-		 cout << "Ropa interior" << endl;
-		}
-
-	 cout << "Descuento(si es que lo tuvo de acorde a su edad): " << descuento << "%" << endl;
-
-	 cout << "Fecha de venta: "; fechaVenta.mostrarFecha(); cout << endl;
+	 cout << left;
+	 cout << " " << setw(4) << idProducto;
+	 cout << setw(10) << dni;
+	 cout << setw(11) << nombre;
+	 cout << setw(11) << apellido;
+	 cout << setw(18) << mail;
+	 cout << "$" << fixed << setprecision(2) << setw(12) << precio;
+	 cout << "%" << setw(8) << descuento;
+	 cout << setw(1); fechaVenta.mostrarFecha();
 
 	}
 
@@ -172,9 +135,10 @@ void Venta::mostrarTodasLasVentas(){
 		 return;
 		}
 	 Venta regV;
+	 mostrarEncabezadoVenta();
 	 while(fread(&regV,sizeof(Venta),1,p) == 1){
 		 regV.mostrarVenta();
-		 cout << "------------------"<< endl;
+		 cout << endl;
 		}
 	 fclose(p);
 

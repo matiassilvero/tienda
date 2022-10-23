@@ -5,27 +5,29 @@ class Producto{
 
 	 private:
 		int idProducto;
-		int marca;//1Adidas 2NIKE 3PUMA
-		float precio;
 		char nombre[20];
+		float precio;
+		int marca;//1Adidas 2NIKE 3PUMA
 		int stock;
 		int genero;//Hombre,Mujer,Unisex
 		int tipo;//Prenda superior, prenda inferior, ropa interior
 
 	 public:
 	 	bool cargarProducto();
+	 	void mostrarProducto(Producto);
 	 	void mostrarProducto();
-	 	bool grabarProductoEnDisco();
 	 	bool mostrarTodosLosProductos();
+	 	void mostrarEncabezadoProducto();
+	 	bool grabarProductoEnDisco();
 	 	bool mostrarTodosLosProductos(int);
 
-		void setIdProducto();
-		void setMarca();
-		void setPrecio();
-		void setNombre();
-		void setStock();
-		void setGenero();
-		void setTipo();
+		void setIdProducto(int);
+		void setMarca(int);
+		void setPrecio(float);
+		void setNombre(const char*);
+		void setStock(int);
+		void setGenero(int);
+		void setTipo(int);
 
 		int getIdProducto(){return idProducto;}
 		int getMarca(){return marca;}
@@ -36,5 +38,7 @@ class Producto{
 		int getTipo(){return tipo;}
 
 	};
+
+void cargarVectorProductosMD();
 
 #endif // PRODUCTO_H_INCLUDED

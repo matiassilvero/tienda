@@ -1,5 +1,7 @@
 #include <iostream>
 #include <cstdio>
+#include <iomanip>
+#include <cstring>
 using namespace std;
 #include <locale.h>
 #include "rlutil.h"
@@ -9,10 +11,21 @@ using namespace rlutil;
 #include "producto.h"
 #include "venta.h"
 
+///VALIDAR DNI, Q SEA DE 1 A 99999999
+///SI PONGO UN DNI Y NO ESTA REGISTRADO, Q AUTOMATICAMENTE SE PONGA ESE DNI NUEVAMENTE EN EL REGISTRO
+///MEJORAR LAS PROMOCIONES, Q TENGA OPCIONES Q PUEDA EDITAR DESDE EL MENU OCULTO
+///OPCION MOSTRAR TODOS LOS PRODUCTOS
+///ESTETICA DEL MENU OCULTO
+///MEJORAR INFORME
+///Q SE COMPRE DIRECTAMENTE DESDE DONDE SE VEN LOS PRODUCTOS
+///Q AVISE CUANDO EL CLIENTE RECIBIO UN DESCUENTO
+
+
 int main(){
+
 	 setlocale(LC_ALL, "spanish");
 	 bool continuar = true;
-     int op;
+     int opMenuPrincipal;
      Producto regP;
      cout << "Productos: " << endl;
      regP.mostrarTodosLosProductos();
@@ -24,43 +37,22 @@ int main(){
      while(continuar){
 		 cls();
          menuPrincipal();
-         cin>>op;
-         switch(op){
+         cin>>opMenuPrincipal;
+         switch(opMenuPrincipal){
 	    	 case 1:{///SECTOR PRODUCTOS
 	    	 	 cls();
 	    		 bool continuarProductos = true;
-	    		 int op2;
+	    		 int opProductos;
 	    		 menuProductos();
-	    		 cin >> op2;
-                 switch(op2){
+	    		 cin >> opProductos;
+                 switch(opProductos){
 					 case 1:{//sector hombres
 					 	 cls();
 						 Producto regP;
 						 cout << "Productos para hombres: " << endl;
 						 cout << "--------------------------" << endl;
 						 regP.mostrarTodosLosProductos(1);
-						 bool respuesta;
-						 cout << endl << "¿Desea realizar la compra de alguna de estas prendas(1- SI 0- NO)? " << endl;
-						 cin >> respuesta;
-						 if(respuesta==1){
-						 	 int dni;
-						 	 Venta regV;
-						 	 int idP;
-							 cout << "Ingrese su DNI, si esta registrado, procederemos a la compra, de lo contrario lo registraremos: ";
-							 cin >> dni;
-							 if(buscarCliente(dni)){
-								 cout << "Esta registrado, continuemos :) " << endl;
-								}
-							 else{
-								 cout << "Usted debe registrarse: " << endl;
-								 regC.cargarCliente();
-								 regC.grabarEnDisco();
-								}
-							 cout << "Ingrese el ID del producto que desea: ";
-							 cin >> idP;
-							 regV.cargarVenta(dni,idP);
-							 regV.grabarVenta();
-							}
+						 anykey();
 						 break;
 						}
 					 case 2:{//sector mujeres
@@ -69,28 +61,7 @@ int main(){
 						 cout << "Productos para mujeres: " << endl;
 						 cout << "--------------------------" << endl;
 						 regP.mostrarTodosLosProductos(2);
-						 bool respuesta;
-						 cout << endl << "¿Desea realizar la compra de alguna de estas prendas(1- SI 0- NO)? " << endl;
-						 cin >> respuesta;
-						 if(respuesta==1){
-						 	 int dni;
-						 	 Venta regV;
-						 	 int idP;
-							 cout << "Ingrese su DNI, si esta registrada, procederemos a la compra, de lo contrario la registraremos: ";
-							 cin >> dni;
-							 if(buscarCliente(dni)){
-								 cout << "Esta registrada, continuemos :) " << endl;
-								}
-							 else{
-								 cout << "Usted debe registrarse: " << endl;
-								 regC.cargarCliente();
-								 regC.grabarEnDisco();
-								}
-							 cout << "Ingrese el ID del producto que desea: ";
-							 cin >> idP;
-							 regV.cargarVenta(dni,idP);
-							 regV.grabarVenta();
-						    }
+						 anykey();
 						 break;
 						}
 					 case 3:{//sector otros
@@ -99,28 +70,7 @@ int main(){
 						 cout << "Productos para todos los sexos: " << endl;
 						 cout << "--------------------------" << endl;
 						 regP.mostrarTodosLosProductos(3);
-						 bool respuesta;
-						 cout << endl << "¿Desea realizar la compra de alguna de estas prendas(1- SI 0- NO)? " << endl;
-						 cin >> respuesta;
-						 if(respuesta==1){
-						 	 int dni;
-						 	 Venta regV;
-						 	 int idP;
-							 cout << "Ingrese su DNI, si esta registrade, procederemos a la compra, de lo contrario le registraremos: ";
-							 cin >> dni;
-							 if(buscarCliente(dni)){
-								 cout << "Esta registrade, continuemos :) " << endl;
-								}
-							 else{
-								 cout << "Usted debe registrarse: " << endl;
-								 regC.cargarCliente();
-								 regC.grabarEnDisco();
-								}
-							 cout << "Ingrese el ID del producto que desea: ";
-							 cin >> idP;
-							 regV.cargarVenta(dni,idP);
-							 regV.grabarVenta();
-						    }
+						 anykey();
 						 break;
 						}
 					 case 0:{///vuelve al menu ppal.
@@ -130,15 +80,15 @@ int main(){
 					}
 	    		 break;
 				}
-	    	 case 2:{///SECTOR PROMOCIONES
+	    	 case 2:{///SECTOR COMPRA
 	    		 cls();
-	    		 menuPromociones();
+	    		 realizarCompra();
 	    		 anykey();
 	    		 break;
 	    		}
-	    	 case 3:{///SECTOR POLITICAS
+	    	 case 3:{///SECTOR PROMOCIONES
 	    		 cls();
-	    		 menuPoliticas();
+	    		 menuPromociones();
 	    		 anykey();
 	    		 break;
 	    		}
@@ -152,9 +102,9 @@ int main(){
 	    	 	 cls();
 			     menuOculto();
 			     bool continuarOculto = true;
-	    		 int op3;
-	    		 cin >> op3;
-                 switch(op3){
+	    		 int opMenuOculto;
+	    		 cin >> opMenuOculto;
+                 switch(opMenuOculto){
 					 case 1:{//sector configuracion
 					 	 cls();
 						 cout << "Cargar Productos: " << endl;
@@ -166,14 +116,17 @@ int main(){
 								}
 						 break;
 						}
-					 case 2:{//sector REPORTES
-					 	 int op4;
+					 case 2:{//sector LISTADOS
+					 	 cls();
+					 	 int opListados;
 					 	 cout << "1- Ver todas las ventas " << endl;
-					 	 cout << "2- Ver todos los clientes " << endl;//por genero, ordenados por apellido, ordenados por edad
-					 	 cout << "3- Ver todos los productos " << endl;
-					 	 cout << "4- Ver recaudacion por fecha " << endl;
-					 	 cin >> op4;
-					 	 switch(op4){
+					 	 cout << "2- Ver todos los clientes ordenados por apellido " << endl;
+					 	 cout << "3- Ver todos los productos ordenados por stock " << endl;
+					 	 cout << "0- Menu principal " << endl;
+					 	 cout << "----------------------------------"<<endl;
+					 	 cout << "Ingrese una opcion: ";
+					 	 cin >> opListados;
+					 	 switch(opListados){
 							 case 1:{//ventas
 							 	 cls();
 								 Venta regV;
@@ -182,19 +135,24 @@ int main(){
 								 break;
 								}
 							 case 2:{//clientes
-							 	 cout << "Reporte/consulta de clientes " << endl;
-							 	 cout << "----------------------------" << endl;
-							 	 cout << "1- Todos " << endl;
-							 	 cout << "2- Ordenados por genero " << endl;
-							 	 cout << "3- Ordenados por apellido " << endl;
-							 	 cout << "4- Ordenados por edad " << endl;
-							 	 mostrarClientesPorApellidoConMD();
+								 cls();
+								 cout << "Clientes ordenados por apellido: " << endl << endl;
+								 Cliente regC;
+								 cargarVectorClientesMD();
+								 anykey();
 							 	break;
 							 }
+							 case 3:{
+								 cls();
+								 cout << "Productos: " << endl << endl;
+								 cargarVectorProductosMD();
+								 anykey();
+								 break;
+								}
 							}
 					 	 break;
 						}
-					 case 3:{
+					 case 0:{
 						 continuarOculto = false;
 						 break;
 						}

@@ -5,8 +5,8 @@ class Persona{
 
 	 protected:
 	  int dni;
-	  char nombre[20];
-	  char apellido[20];
+	  char nombre[10];
+	  char apellido[10];
 	  Fecha fechaNacimiento;
 	  int genero;
 

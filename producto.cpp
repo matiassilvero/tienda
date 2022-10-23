@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
 #include "rlutil.h"
 using namespace rlutil;
@@ -34,52 +35,6 @@ bool Producto::cargarProducto(){
 
 	}
 
-void Producto::mostrarProducto(){
-
-	 cout << "Id: " << idProducto << endl;
-
-	 cout << "Nombre del producto: " << nombre << endl;
-
-	 cout << "Marca: ";
-	 if(marca == 1){
-		 cout << "Adidas" << endl;
-		}
-	 else if(marca==2){
-		 cout << "NIKE" << endl;
-		}
-	 else{
-		 cout << "PUMA" << endl;
-		}
-
-	 cout << "Stock: " << stock << " unidades " << endl;
-
-	 cout << "Genero: ";
-	 if(genero == 1){
-		 cout << "Hombre" << endl;
-		}
-	 else if(genero==2){
-		 cout << "Mujer" << endl;
-		}
-	 else{
-		 cout << "Unisex" << endl;
-		}
-
-	 cout << "Tipo: ";
-	 if(tipo == 1){
-		 cout << "Prenda superior" << endl;
-		}
-	 else if(tipo==2){
-		 cout << "Prenda inferior" << endl;
-		}
-	 else{
-		 cout << "Ropa interior" << endl;
-		}
-
-	 cout << "Precio: ";
-	 cout << "$" << precio << endl;
-
-	}
-
 bool Producto::mostrarTodosLosProductos(){
 
 	 FILE * p =fopen(APRODUCTOS,"rb");
@@ -89,15 +44,111 @@ bool Producto::mostrarTodosLosProductos(){
 		 return false;
 		}
 	 Producto regP;
+     mostrarEncabezadoProducto();
+
 	 while(fread(&regP,sizeof(Producto),1,p) == 1){
-		 regP.mostrarProducto();
-		 cout << "--------------------------" << endl;
+		 mostrarProducto(regP);
+		 cout << endl;
 		}
 	 fclose(p);
 
 	 return true;
 
 	}
+
+void Producto::mostrarEncabezadoProducto(){
+
+    cout << left;
+    cout << setw(3) << " ID";
+    cout << setw(19) << "  Nombre del producto";
+    cout << setw(9) << "  Precio";
+    cout << setw(9) << "   Marca";
+    cout << setw(8) << " Stock";
+    cout << setw(8) << "Genero";
+    cout << setw(20) << "Tipo de prenda" << endl;
+    cout << "-------------------------------------------------------------------------" << endl;
+
+}
+
+void Producto::mostrarProducto(){
+
+     cout << left;
+     cout << " " << setw(4) << idProducto;
+     cout << setw(20) << nombre;
+     cout << "$" << fixed << setprecision(2) << setw(10) << precio;
+     cout << setw(8);
+         if(marca== 1){
+             cout << "Adidas";
+            }
+         else if(marca==2){
+             cout << "NIKE";
+            }
+         else{
+             cout << "PUMA";
+            }
+     cout << setw(4) << stock;
+     cout << "  " << setw(8);
+         if(genero==1){
+             cout << "Hombre";
+            }
+         else if(genero == 2){
+             cout << "Mujer";
+            }
+         else{
+             cout << "Unisex";
+            }
+     cout << setw(20);
+         if(tipo == 1){
+             cout << "Prenda superior";
+            }
+         else if(tipo==2){
+             cout << "Prenda inferior";
+            }
+         else{
+             cout << "Ropa interior";
+            }
+
+    }
+
+void Producto::mostrarProducto(Producto regP){
+
+     cout << left;
+     cout << " " << setw(4) << regP.getIdProducto();
+     cout << setw(20) << regP.getNombre();
+     cout << "$" << fixed << setprecision(2) << setw(10) << regP.getPrecio();
+     cout << setw(8);
+         if(regP.getMarca() == 1){
+             cout << "Adidas";
+            }
+         else if(regP.getMarca()==2){
+             cout << "NIKE";
+            }
+         else{
+             cout << "PUMA";
+            }
+     cout << setw(4) << regP.getStock();
+     cout << "  " << setw(8);
+         if(regP.getGenero()==1){
+             cout << "Hombre";
+            }
+         else if(regP.getGenero() == 2){
+             cout << "Mujer";
+            }
+         else{
+             cout << "Unisex";
+            }
+     cout << setw(20);
+         if(regP.getTipo() == 1){
+             cout << "Prenda superior";
+            }
+         else if(regP.getTipo()==2){
+             cout << "Prenda inferior";
+            }
+         else{
+             cout << "Ropa interior";
+            }
+
+    }
 
 bool Producto::mostrarTodosLosProductos(int gen){
 
@@ -108,10 +159,12 @@ bool Producto::mostrarTodosLosProductos(int gen){
 		 return false;
 		}
 	 Producto regP;
+	 mostrarEncabezadoProducto();
+
 	 while(fread(&regP,sizeof(Producto),1,p) == 1){
 		 if(regP.getGenero()==gen){
-			 regP.mostrarProducto();
-			 cout << "--------------------------" << endl;
+			 mostrarProducto(regP);
+			 cout << endl;
 			}
 		}
 	 fclose(p);
@@ -151,10 +204,96 @@ int generarIdProducto(){
 
 	}
 
-//		void setIdProducto();
-//		void setMarca();
-//		void setPrecio();
-//		void setNombre();
-//		void setStock();
-//		void setGenero();
-//		void setTipo();
+void Producto::setIdProducto(int nIdProducto){
+	 idProducto = nIdProducto;
+	}
+
+void Producto::setMarca(int nMarca){
+	 marca = nMarca;
+	}
+
+void Producto::setPrecio(float nPrecio){
+	 precio = nPrecio;
+	}
+
+void Producto::setNombre(const char * nNombre){
+	 strcpy(nombre,nNombre);
+	}
+
+void Producto::setStock(int nStock){
+	 stock = nStock;
+	}
+
+void Producto::setGenero(int nGenero){
+	 genero = nGenero;
+	}
+
+void Producto::setTipo(int nTipo){
+	 tipo = nTipo;
+	}
+
+Producto devolverProductoPorPosicion2(int posicion){
+
+	FILE * p = fopen("productos.dat","rb");
+	 if(p==NULL){
+		 anykey("Error con el archivo productos.");
+		}
+
+	 Producto regP;
+	 int i=0;
+	 while(fread(&regP,sizeof(Producto),1,p) == 1 ){
+		 if(i == posicion){
+			 fclose(p);
+			 return regP;
+			}
+		 i++;
+		}
+	 fclose(p);
+
+	}
+
+void ordenarProductos(Producto* vec, int cantidad){
+
+     for(int i = 0; i<cantidad-1; i++){
+         int posMenor = i;
+
+         for(int j = i+1; j < cantidad; j++){
+             if(vec[j].getStock()<vec[posMenor].getStock()){
+				 posMenor = j;
+				}
+			}
+		 Producto iAux;
+		 iAux = vec[i];
+		 vec[i] = vec[posMenor];
+		 vec[posMenor] = iAux;
+		}
+
+    }
+
+///MEMORIA DINAMICA
+void cargarVectorProductosMD(){
+
+     Producto * vectorDinamico;
+     int tamanio;
+     tamanio = cantidadDeProductos();
+     vectorDinamico = new Producto[tamanio];
+     if(vectorDinamico==NULL){
+	  	 return;
+	  	}
+     //cout<<"Carga tu vector: "<<endl;
+      Producto regP;
+      int i=0;
+      for(i=0;i<tamanio;i++){
+          vectorDinamico[i] = devolverProductoPorPosicion2(i);
+	  	}
+
+     //Para mostrar el vector
+     ordenarProductos(vectorDinamico,tamanio);
+     regP.mostrarEncabezadoProducto();
+     for(int i=0;i<tamanio;i++){
+	  	 vectorDinamico[i].mostrarProducto();
+	  	 cout << endl;
+     }
+	  delete vectorDinamico;
+
+	}

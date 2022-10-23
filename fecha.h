@@ -8,6 +8,7 @@ class Fecha{
 		 int dia, mes, anio;
 	 public:
 		 Fecha();
+		 Fecha(int,int,int);
 	     bool cargarFecha();
 	     void mostrarFecha();
 
